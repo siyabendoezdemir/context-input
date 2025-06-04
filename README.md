@@ -5,6 +5,8 @@ A simple step-based input component I built for [Context](https://www.context.in
 You can try it live here:  
 👉 [context-input.vercel.app](https://context-input.vercel.app/)
 
+![Preview](./public/thumbnail.png)
+
 ---
 
 ## 🚀 Tech Stack
