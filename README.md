@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 context-input
 
-## Getting Started
+A simple step-based input component I built for [Context](https://www.context.inc/) meant to guide users through onboarding or any multi-step process. It's basically a prompt input, but with a progress bar and steps on top so users know what to do and what’s next.
 
-First, run the development server:
+You can try it live here:  
+👉 [context-input.vercel.app](https://context-input.vercel.app/)
+
+---
+
+## 🚀 Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+
+---
+
+## 🔧 Setup
+
+Clone it and you’re good to go:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/siyabendoezdemir/context-input.git
+cd context-input
+bun install # or npm install / yarn
+bun dev     # or npm run dev / yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No config, no props, just works.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚠️ Customization
 
-## Learn More
+Right now, it's not customizable out of the box — you'd need to tweak the code if you want to change step styles, colors, or anything else.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💬 Why I built this
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The founder of Context needed me to create a component as a quick pulse check.
+Was fun to build and I might keep improving it as it gets used more.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — feel free to fork, remix, or build on top of it.
+
+---
+
+## ✌️ From Siya
+
+Made with way too much caffeine in Basel 🇨🇭  
+If you use it somewhere cool, [let me know on X](https://x.com/siyabuilt)!
