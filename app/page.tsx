@@ -1,5 +1,5 @@
-import { ContextInput } from "@/components/context-input";
-import { WorkflowSteps } from "@/components/workflow-steps";
+import { ContextInput } from "@/components/prompt-input/context-input";
+import { WorkflowSteps } from "@/components/prompt-input/workflow-steps";
 import Image from "next/image";
 
 export default function Home() {
