@@ -23,6 +23,9 @@ export function ContextInput({ artifacts = [] }: ContextInputProps) {
 
   // Combine prop artifacts with dynamic artifacts
   const allArtifacts = [...artifacts, ...dynamicArtifacts]
+  
+  // Calculate if we need extra height for scrollbar
+  const hasScrollableArtifacts = allArtifacts.length > 0
 
   const handleSubmit = () => {
     setIsLoading(true)
@@ -65,7 +68,11 @@ export function ContextInput({ artifacts = [] }: ContextInputProps) {
   }
 
   return (
-    <div className="w-full max-w-[625px] h-[120px] md:h-[144px] border border-[rgba(20,20,20,0.05)] shadow-[0px_0px_0.5px_0.5px_rgba(20,20,20,0.18),inset_0px_0px_7px_-3px_#FFFFFF,0px_2px_4px_rgba(20,20,20,0.04),0px_16px_22px_rgba(20,20,20,0.03)] rounded-2xl bg-white">
+    <div className={`w-full max-w-[625px] border border-[rgba(20,20,20,0.05)] shadow-[0px_0px_0.5px_0.5px_rgba(20,20,20,0.18),inset_0px_0px_7px_-3px_#FFFFFF,0px_2px_4px_rgba(20,20,20,0.04),0px_16px_22px_rgba(20,20,20,0.03)] rounded-2xl bg-white transition-all duration-300 ease-out ${
+      hasScrollableArtifacts 
+        ? 'h-[140px] md:h-[164px]' 
+        : 'h-[120px] md:h-[144px]'
+    }`}>
       {/* Hidden file input */}
       <input
         ref={fileInputRef}
@@ -80,11 +87,11 @@ export function ContextInput({ artifacts = [] }: ContextInputProps) {
         {/* Attached File Card - Only show if artifacts exist */}
         {allArtifacts.length > 0 && (
           <div className="mb-2 md:mb-3">
-            <div className="flex flex-row items-center gap-2 w-full flex-wrap">
+            <div className="flex flex-row items-center gap-2 w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pb-1 pt-2 pr-2">
               {allArtifacts.map((artifact, index) => (
                 <div 
                   key={artifact.id || index} 
-                  className={`group relative flex flex-row items-center min-w-fit max-w-[280px] h-[24px] md:h-[28px] pt-[3px] md:pt-[4px] pr-[6px] md:pr-[8px] pb-[3px] md:pb-[4px] pl-[6px] md:pl-[8px] gap-[3px] md:gap-[4px] rounded-[6px] md:rounded-[8px] border-[0.5px] border-[rgba(20,20,20,0.05)] bg-[rgba(252,243,240,0.75)] flex-none transition-all duration-300 ease-out ${
+                  className={`group relative flex flex-row items-center min-w-fit max-w-[280px] h-[24px] md:h-[28px] pt-[3px] md:pt-[4px] pr-[6px] md:pr-[8px] pb-[3px] md:pb-[4px] pl-[6px] md:pl-[8px] gap-[3px] md:gap-[4px] rounded-[6px] md:rounded-[8px] border-[0.5px] border-[rgba(20,20,20,0.05)] bg-[rgba(252,243,240,0.75)] flex-shrink-0 transition-all duration-300 ease-out ${
                     artifact.id === newArtifactId 
                       ? 'animate-[artifactSlideIn_0.5s_ease-out] scale-100' 
                       : 'scale-100'
@@ -97,7 +104,7 @@ export function ContextInput({ artifacts = [] }: ContextInputProps) {
                   {artifact.id && (
                     <button
                       onClick={() => handleRemoveArtifact(artifact.id!)}
-                      className="absolute -top-1 -right-1 w-4 h-4 bg-white border border-gray-300 text-gray-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-50 hover:border-gray-400 text-[10px] leading-none shadow-sm"
+                      className="absolute top-0 right-0 w-4 h-4 bg-white border border-gray-300 text-gray-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-50 hover:border-gray-400 text-[10px] leading-none shadow-sm translate-x-1/2 -translate-y-1/2"
                       aria-label="Remove attachment"
                     >
                       ×
