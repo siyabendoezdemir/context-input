@@ -17,6 +17,13 @@ export default function Home() {
                 iconAlt: "Presentation"
               }
             ]}
+            connectedApps={[
+              { id: "drive", name: "Google Drive", logo: "/assets/logos/drive.svg" },
+              { id: "slack", name: "Slack", logo: "/assets/logos/slack.svg" },
+              { id: "notion", name: "Notion", logo: "/assets/logos/notion.svg" },
+              { id: "calendar", name: "Google Calendar", logo: "/assets/logos/calendar.svg" },
+              { id: "github", name: "GitHub", logo: "/assets/logos/github.svg" }
+            ]}
           />
         </div>
       </div>
@@ -32,6 +39,13 @@ export default function Home() {
                 title: "Slack Q1 2024 Expense Analysis",
                 iconAlt: "Presentation"
               }
+            ]}
+            connectedApps={[
+              { id: "drive", name: "Google Drive", logo: "/assets/logos/drive.svg" },
+              { id: "slack", name: "Slack", logo: "/assets/logos/slack.svg" },
+              { id: "notion", name: "Notion", logo: "/assets/logos/notion.svg" },
+              { id: "calendar", name: "Google Calendar", logo: "/assets/logos/calendar.svg" },
+              { id: "github", name: "GitHub", logo: "/assets/logos/github.svg" }
             ]}
           />
         </div>

@@ -11,6 +11,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Test Signifier';
+  src: url('/fonts/Signifier/TestSignifier-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Airgap mode banner height */
   --airgap-banner-height: 0px;

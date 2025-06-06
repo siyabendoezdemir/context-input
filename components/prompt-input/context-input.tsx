@@ -10,11 +10,18 @@ type Artifact = {
   id?: string
 }
 
-type ContextInputProps = {
-  artifacts?: Array<Artifact>
+type ConnectedApp = {
+  id: string
+  name: string
+  logo: string
 }
 
-export function ContextInput({ artifacts = [] }: ContextInputProps) {
+type ContextInputProps = {
+  artifacts?: Array<Artifact>
+  connectedApps?: Array<ConnectedApp>
+}
+
+export function ContextInput({ artifacts = [], connectedApps = [] }: ContextInputProps) {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [dynamicArtifacts, setDynamicArtifacts] = useState<Artifact[]>([])
@@ -161,23 +168,28 @@ export function ContextInput({ artifacts = [] }: ContextInputProps) {
             <div className="group flex items-center cursor-pointer">
               <div className="flex items-center gap-1 md:gap-2 transition-colors duration-200 group-hover:text-gray-800">
                 <img src="/assets/icons/blocks.svg" alt="Blocks" className="h-3 w-3 md:h-4 md:w-4" />
-                <span className="text-xs md:text-sm font-medium text-gray-600 group-hover:text-gray-800">5 connected</span>
+                <span className="text-xs md:text-sm font-medium text-gray-600 group-hover:text-gray-800">
+                  {connectedApps.length > 0 ? `${connectedApps.length} connected` : 'Connect apps'}
+                </span>
               </div>
               
-              {/* Profile Dots - Hidden by default, expand on hover */}
-              <div className="overflow-hidden transition-all duration-300 ease-in-out group-hover:w-[64px] group-hover:md:w-[79px] group-hover:ml-[3px] group-hover:md:ml-[4px] w-0 ml-0">
-                <div className="flex items-center -space-x-1">
-                  <div className="w-[20px] md:w-[25px] h-[20px] md:h-[24px] gap-[10px] rounded-[100px] border-[0.5px] p-[1px] bg-white border-[#1414140D] flex items-center justify-center">
-                    <img src="/assets/logos/drive.svg" alt="Google Drive" className="w-[12px] md:w-[14px] h-[12px] md:h-[14px]" />
-                  </div>
-                  <div className="w-[20px] md:w-[25px] h-[20px] md:h-[24px] gap-[10px] rounded-[100px] border-[0.5px] p-[1px] bg-white border-[#1414140D] flex items-center justify-center">
-                    <img src="/assets/logos/slack.svg" alt="Slack" className="w-[12px] md:w-[14px] h-[12px] md:h-[14px]" />
-                  </div>
-                  <div className="w-[20px] md:w-[25px] h-[20px] md:h-[24px] gap-[10px] rounded-[100px] border-[0.5px] p-[1px] bg-white border-[#1414140D] flex items-center justify-center text-gray-400 text-[10px] md:text-xs font-medium">
-                    +3
+              {/* Profile Dots - Only show if there are connected apps */}
+              {connectedApps.length > 0 && (
+                <div className="overflow-hidden transition-all duration-300 ease-in-out group-hover:w-[64px] group-hover:md:w-[79px] group-hover:ml-[3px] group-hover:md:ml-[4px] w-0 ml-0">
+                  <div className="flex items-center -space-x-1">
+                    {connectedApps.slice(0, 2).map((app) => (
+                      <div key={app.id} className="w-[20px] md:w-[25px] h-[20px] md:h-[24px] gap-[10px] rounded-[100px] border-[0.5px] p-[1px] bg-white border-[#1414140D] flex items-center justify-center">
+                        <img src={app.logo} alt={app.name} className="w-[12px] md:w-[14px] h-[12px] md:h-[14px]" />
+                      </div>
+                    ))}
+                    {connectedApps.length > 2 && (
+                      <div className="w-[20px] md:w-[25px] h-[20px] md:h-[24px] gap-[10px] rounded-[100px] border-[0.5px] p-[1px] bg-white border-[#1414140D] flex items-center justify-center text-gray-400 text-[10px] md:text-xs font-medium">
+                        +{connectedApps.length - 2}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
