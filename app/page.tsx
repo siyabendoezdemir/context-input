@@ -9,7 +9,15 @@ export default function Home() {
       <div className="hidden md:flex flex-1 flex-col justify-center items-center gap-4 p-4">
         <div className="w-full max-w-[625px] space-y-4">
           <WorkflowSteps />
-          <ContextInput />
+          <ContextInput 
+            artifacts={[
+              {
+                icon: "/assets/presentation.svg",
+                title: "Slack Q1 2024 Expense Analysis",
+                iconAlt: "Presentation"
+              }
+            ]}
+          />
         </div>
       </div>
       
@@ -17,7 +25,15 @@ export default function Home() {
       <div className="md:hidden flex flex-col justify-end min-h-screen">
         <div className="fixed bottom-0 left-0 right-0 bg-white p-4 space-y-4 shadow-lg">
           <WorkflowSteps />
-          <ContextInput />
+          <ContextInput 
+            artifacts={[
+              {
+                icon: "/assets/presentation.svg",
+                title: "Slack Q1 2024 Expense Analysis",
+                iconAlt: "Presentation"
+              }
+            ]}
+          />
         </div>
       </div>
     </div>

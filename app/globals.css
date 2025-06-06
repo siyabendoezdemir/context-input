@@ -393,6 +393,22 @@
     }
   }
 
+  /* Artifact slide-in animation */
+  @keyframes artifactSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px) scale(0.9);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translateX(0) scale(1.05);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
 .animate-float-delayed {
   animation: float-delayed 4s ease-in-out infinite;
   animation-delay: 1s;

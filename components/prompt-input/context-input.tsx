@@ -1,11 +1,28 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
-export function ContextInput() {
+type Artifact = {
+  icon: string
+  title: string
+  iconAlt?: string
+  id?: string
+}
+
+type ContextInputProps = {
+  artifacts?: Array<Artifact>
+}
+
+export function ContextInput({ artifacts = [] }: ContextInputProps) {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [dynamicArtifacts, setDynamicArtifacts] = useState<Artifact[]>([])
+  const [newArtifactId, setNewArtifactId] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Combine prop artifacts with dynamic artifacts
+  const allArtifacts = [...artifacts, ...dynamicArtifacts]
 
   const handleSubmit = () => {
     setIsLoading(true)
@@ -14,24 +31,86 @@ export function ContextInput() {
     }, 2000)
   }
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      const artifactId = Date.now().toString()
+
+      const newArtifact: Artifact = {
+        id: artifactId,
+        icon: "/assets/presentation.svg", // Use the same icon for all files
+        title: file.name,
+        iconAlt: "Attachment"
+      }
+
+      setDynamicArtifacts(prev => [...prev, newArtifact])
+      setNewArtifactId(artifactId)
+      
+      // Clear the animation state after animation completes
+      setTimeout(() => setNewArtifactId(null), 500)
+    }
+    
+    // Clear the input value so the same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
+
+  const handleRemoveArtifact = (artifactId: string) => {
+    setDynamicArtifacts(prev => prev.filter(artifact => artifact.id !== artifactId))
+  }
+
+  const handlePlusClick = () => {
+    fileInputRef.current?.click()
+  }
+
   return (
     <div className="w-full max-w-[625px] h-[120px] md:h-[144px] border border-[rgba(20,20,20,0.05)] shadow-[0px_0px_0.5px_0.5px_rgba(20,20,20,0.18),inset_0px_0px_7px_-3px_#FFFFFF,0px_2px_4px_rgba(20,20,20,0.04),0px_16px_22px_rgba(20,20,20,0.03)] rounded-2xl bg-white">
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        onChange={handleFileUpload}
+        className="hidden"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif"
+      />
       {/* Main content container */}
       <div className="h-full flex flex-col p-3 md:p-4">
         
-        {/* Attached File Card */}
-        <div className="mb-2 md:mb-3">
-          <div className="flex flex-row items-center gap-2 w-full">
-            {/* Artifact Pill */}
-            <div className="flex flex-row items-center w-[180px] md:w-[212px] h-[24px] md:h-[28px] pt-[3px] md:pt-[4px] pr-[6px] md:pr-[8px] pb-[3px] md:pb-[4px] pl-[6px] md:pl-[8px] gap-[3px] md:gap-[4px] rounded-[6px] md:rounded-[8px] border-[0.5px] border-[rgba(20,20,20,0.05)] bg-[rgba(252,243,240,0.75)] flex-none order-2 flex-grow-0">
-              <img src="/assets/presentation.svg" alt="Presentation" className="w-[12px] md:w-[14px] h-[12px] md:h-[14px] flex-none order-1 flex-grow-0" />
-              <span className="h-[18px] md:h-[20px] font-[500] text-[10px] md:text-[12px] leading-[18px] md:leading-[20px] tracking-[-0.09px] text-[#D9592A] flex-none order-2 flex-grow-0 truncate" style={{fontFamily: "'Suisse Int\\'l'"}}>Slack Q1 2024 Expense Analysis</span>
+        {/* Attached File Card - Only show if artifacts exist */}
+        {allArtifacts.length > 0 && (
+          <div className="mb-2 md:mb-3">
+            <div className="flex flex-row items-center gap-2 w-full flex-wrap">
+              {allArtifacts.map((artifact, index) => (
+                <div 
+                  key={artifact.id || index} 
+                  className={`group relative flex flex-row items-center min-w-fit max-w-[280px] h-[24px] md:h-[28px] pt-[3px] md:pt-[4px] pr-[6px] md:pr-[8px] pb-[3px] md:pb-[4px] pl-[6px] md:pl-[8px] gap-[3px] md:gap-[4px] rounded-[6px] md:rounded-[8px] border-[0.5px] border-[rgba(20,20,20,0.05)] bg-[rgba(252,243,240,0.75)] flex-none transition-all duration-300 ease-out ${
+                    artifact.id === newArtifactId 
+                      ? 'animate-[artifactSlideIn_0.5s_ease-out] scale-100' 
+                      : 'scale-100'
+                  }`}
+                >
+                  <img src={artifact.icon} alt={artifact.iconAlt || "Artifact"} className="w-[12px] md:w-[14px] h-[12px] md:h-[14px] flex-shrink-0" />
+                  <span className="font-[500] text-[10px] md:text-[12px] leading-[18px] md:leading-[20px] tracking-[-0.09px] text-[#D9592A] truncate pr-1" style={{fontFamily: "'Suisse Int\\'l'"}}>{artifact.title}</span>
+                  
+                  {/* Remove button - only show for dynamic artifacts and on hover */}
+                  {artifact.id && (
+                    <button
+                      onClick={() => handleRemoveArtifact(artifact.id!)}
+                      className="absolute -top-1 -right-1 w-4 h-4 bg-white border border-gray-300 text-gray-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-50 hover:border-gray-400 text-[10px] leading-none shadow-sm"
+                      aria-label="Remove attachment"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
+        )}
         
         {/* Input Area - top row */}
-        <div className="flex-1 flex items-center mb-3 md:mb-4">
+        <div className={`flex-1 flex mb-3 md:mb-4 ${allArtifacts.length === 0 ? 'items-start pt-0' : 'items-center'}`}>
           <input
             type="text"
             value={input}
@@ -54,8 +133,13 @@ export function ContextInput() {
           <div className="flex items-center gap-3 md:gap-6">
             {/* Action Buttons */}
             <div className="flex items-center gap-2 md:gap-3">
-              <Button variant="ghost" size="icon" className="h-6 w-6 md:h-8 md:w-8 rounded text-gray-600 hover:bg-gray-100">
-                <img src="/assets/icons/plus.svg" alt="Plus" className="h-3 w-3 md:h-4 md:w-4" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-6 w-6 md:h-8 md:w-8 rounded text-gray-600 hover:bg-gray-100"
+                onClick={handlePlusClick}
+              >
+                <img src="/assets/icons/plus.svg" alt="Attach file" className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
               <Button variant="ghost" size="icon" className="h-6 w-6 md:h-8 md:w-8 rounded text-gray-600 hover:bg-gray-100">
                 <img src="/assets/icons/monitor.svg" alt="Monitor" className="h-3 w-3 md:h-4 md:w-4" />
