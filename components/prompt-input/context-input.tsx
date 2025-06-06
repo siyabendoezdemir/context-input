@@ -90,10 +90,34 @@ export function ContextInput() {
             </div>
           </div>
 
-          {/* Right section with mic */}
+          {/* Right section with mic/send button */}
           <div className="flex items-center">
-            <Button variant="ghost" className="w-[30px] md:w-[36px] h-[30px] md:h-[36px] pt-[5px] md:pt-[6px] pr-[6px] md:pr-[8px] pb-[5px] md:pb-[6px] pl-[6px] md:pl-[8px] gap-[6px] md:gap-[8px] rounded-[6px] md:rounded-[8px] border-[0.5px] border-[#1414141A] text-gray-600 hover:bg-gray-100">
-              <img src="/assets/icons/mic.svg" alt="Microphone" className="h-3 w-3 md:h-4 md:w-4" />
+            <Button 
+              variant="ghost" 
+              className={`w-[30px] md:w-[36px] h-[30px] md:h-[36px] pt-[5px] md:pt-[6px] pr-[6px] md:pr-[8px] pb-[5px] md:pb-[6px] pl-[6px] md:pl-[8px] gap-[6px] md:gap-[8px] rounded-[6px] md:rounded-[8px] border-[0.5px] transition-all duration-200 ${
+                input.trim() 
+                  ? 'bg-[var(--color-brand-light)] border-[var(--color-brand-light)] text-white hover:bg-[var(--color-brand-light)]/90' 
+                  : 'border-[#1414141A] text-gray-600 hover:bg-gray-100'
+              }`}
+              onClick={input.trim() ? handleSubmit : undefined}
+            >
+              {input.trim() ? (
+                <svg 
+                  key="arrow"
+                  className="h-3 w-3 md:h-4 md:w-4 animate-[iconBounce_0.3s_ease-out]" 
+                  fill="currentColor" 
+                  viewBox="0 0 20 20"
+                >
+                  <path fillRule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <img 
+                  key="mic"
+                  src="/assets/icons/mic.svg" 
+                  alt="Microphone" 
+                  className="h-3 w-3 md:h-4 md:w-4 animate-[iconBounce_0.3s_ease-out]" 
+                />
+              )}
             </Button>
           </div>
         </div>
