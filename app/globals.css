@@ -1,10 +1,5 @@
-@layer theme, base, components, utilities;
 @import "tailwindcss";
-
-@import '@silk-hq/components/unlayered-styles' layer(silk);
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/preflight.css' layer(base);
-@import 'tailwindcss/utilities.css';
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
