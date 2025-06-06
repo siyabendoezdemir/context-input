@@ -60,10 +60,10 @@ export function ContextInput() {
               <Button variant="ghost" size="icon" className="h-6 w-6 md:h-8 md:w-8 rounded text-gray-600 hover:bg-gray-100">
                 <img src="/assets/icons/monitor.svg" alt="Monitor" className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
-              <div className="flex items-center gap-1 md:gap-2 text-gray-600">
+              <Button variant="ghost" className="h-6 md:h-8 px-2 md:px-3 rounded text-gray-600 hover:bg-gray-100 flex items-center gap-1 md:gap-2">
                 <img src="/assets/icons/dashboard.svg" alt="Dashboard" className="h-3 w-3 md:h-4 md:w-4" />
                 <span className="text-xs md:text-sm font-medium">Effort</span>
-              </div>
+              </Button>
             </div>
 
             {/* Connected Status */}
