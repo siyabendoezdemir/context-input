@@ -7,8 +7,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@plugin 'tailwind-scrollbar';
-
 @font-face {
   font-family: 'Suisse Int\'l';
   src: url('/assets/fonts/suisse-intl-regular.ttf') format('truetype');
@@ -379,9 +377,25 @@
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Icon bounce animation for button state changes */
+  @keyframes iconBounce {
+    0% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.15);
+    }
+    60% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
 .animate-float-delayed {
   animation: float-delayed 4s ease-in-out infinite;
