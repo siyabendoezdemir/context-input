@@ -5,6 +5,10 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css';
 
+@custom-variant dark (&:is(.dark *));
+
+@plugin 'tailwind-scrollbar';
+
 @font-face {
   font-family: 'Suisse Int\'l';
   src: url('/assets/fonts/suisse-intl-regular.ttf') format('truetype');
@@ -35,7 +39,7 @@
   /* Text color variables */
   --text-default: rgb(20 20 20);
   --text-primary: rgb(20 20 20);
-  --text-secondary: rgb(20 20 20 / 0.6);
+  --text-secondary: rgb(93 93 93 / 1);
   --text-tertiary: rgb(20 20 20 / 0.4);
   --text-quartinary: rgb(20 20 20 / 0.25);
   --text-semi-primary: rgb(20 20 20 / 0.8);
@@ -43,11 +47,13 @@
 
   /* Surface variables */
   --surface-default: rgb(255 255 255);
+  --surface-container-lowest: rgb(251 251 251);
   --surface-container-low: rgb(248 248 248);
   --surface-container: rgb(243 243 243);
   --surface-container-high: rgb(225 225 225);
   --surface-container-higher: rgb(210 210 210);
   --surface-container-highest: rgb(195 195 195);
+  --surface-container-lowest-opacity: rgb(20 20 20 / 0.02);
   --surface-container-low-opacity: rgb(20 20 20 / 0.03);
   --surface-container-opacity: rgb(20 20 20 / 0.05);
   --surface-container-high-opacity: rgb(20 20 20 / 0.1);
@@ -90,7 +96,7 @@
   --sidebar-ring: var(--border-emphasis-high);
 
   /* BRAND colors */
-  --color-brand-light: #004359;
+  --color-brand-light: #007ca6;
   --color-brand-dark: #8cc5d9;
   --color-brand: var(--color-brand-light);
   --color-on-brand: #fff;
@@ -125,11 +131,13 @@
 
   /* Surface variables */
   --surface-default: rgb(20 20 20);
+  --surface-container-lowest: rgb(29 29 29);
   --surface-container-low: rgb(29 29 29);
   --surface-container: rgb(36 36 36);
   --surface-container-high: rgb(46 46 46);
   --surface-container-higher: rgb(54 54 54);
   --surface-container-highest: rgb(61 61 61);
+  --surface-container-lowest-opacity: rgb(255 255 255 / 0.02);
   --surface-container-low-opacity: rgb(255 255 255 / 0.04);
   --surface-container-opacity: rgb(255 255 255 / 0.07);
   --surface-container-high-opacity: rgb(255 255 255 / 0.11);
@@ -204,20 +212,18 @@
 
   /* Surface colors */
   --color-surface: var(--surface-default);
+  --color-surface-container-lowest: var(--surface-container-lowest);
   --color-surface-container-low: var(--surface-container-low);
   --color-surface-container: var(--surface-container);
   --color-surface-container-high: var(--surface-container-high);
   --color-surface-container-higher: var(--surface-container-higher);
   --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-container-lowest-opacity: var(--surface-container-lowest-opacity);
   --color-surface-container-low-opacity: var(--surface-container-low-opacity);
   --color-surface-container-opacity: var(--surface-container-opacity);
   --color-surface-container-high-opacity: var(--surface-container-high-opacity);
-  --color-surface-container-higher-opacity: var(
-    --surface-container-higher-opacity
-  );
-  --color-surface-container-highest-opacity: var(
-    --surface-container-highest-opacity
-  );
+  --color-surface-container-higher-opacity: var(--surface-container-higher-opacity);
+  --color-surface-container-highest-opacity: var(--surface-container-highest-opacity);
   --color-surface-inverse: var(--surface-inverse);
 
   /* Border colors */
@@ -231,10 +237,10 @@
   --shadow-border-emphasis-high-color: var(--shadow-border-emphasis-high);
 
   /* Existing box shadows */
-  --shadow-lg: 0px 0px 0.5px 0.5px rgba(20, 20, 20, 0.12),
-    0px 2px 4px rgba(20, 20, 20, 0.04), 0px 16px 22px rgba(20, 20, 20, 0.03) !important;
-  --shadow-md: 0px 1px 2px rgba(20, 20, 20, 0.03),
-    0px 10px 11px rgba(20, 20, 20, 0.02) !important;
+  --shadow-lg:
+    0px 0px 0.5px 0.5px rgba(20, 20, 20, 0.12), 0px 2px 4px rgba(20, 20, 20, 0.04),
+    0px 16px 22px rgba(20, 20, 20, 0.03) !important;
+  --shadow-md: 0px 1px 2px rgba(20, 20, 20, 0.03), 0px 10px 11px rgba(20, 20, 20, 0.02) !important;
 
   /* Existing mappings */
   --radius-sm: calc(var(--radius) - 4px);
@@ -330,6 +336,10 @@
   .scrollbar-overlay {
     scrollbar-gutter: 0;
   }
+  .duration-300 {
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
 }
 
 /* Browser skeleton animations */
@@ -366,21 +376,6 @@
   }
   100% {
     transform: translateY(0px);
-  }
-}
-
-@keyframes iconBounce {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(1.15);
-  }
-  60% {
-    transform: scale(0.95);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 
@@ -479,7 +474,7 @@
   /* SELF-LAYOUT */
   z-index: 1;
   /* Adding 60px to make it fully visible below iOS Safari's
-  bottom UI */
+   bottom UI */
   height: calc(var(--silk-100-lvh-dvh-pct) + 60px);
 }
 
@@ -502,12 +497,12 @@
 }
 
 /* Ensure the artifact panel fills the drawer */
-[data-silk-artifact-drawer] > \* {
+[data-silk-artifact-drawer] > * {
   height: 100%;
 }
 
 /* The multi-line clamp helper was removed in favour of the built-in
-  truncate / text-ellipsis utilities for single-line clamping. */
+   truncate / text-ellipsis utilities for single-line clamping. */
 
 /* Fade in animation */
 @keyframes fadeIn {
