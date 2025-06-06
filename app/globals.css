@@ -1,4 +1,5 @@
 @layer theme, base, components, utilities;
+@import "tailwindcss";
 
 @import '@silk-hq/components/unlayered-styles' layer(silk);
 @import 'tailwindcss/theme.css' layer(theme);

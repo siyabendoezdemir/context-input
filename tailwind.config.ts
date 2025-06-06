@@ -34,11 +34,10 @@ const config: Config = {
         },
     },
     plugins: [
-        // Note: Remove plugins that aren't installed or needed for basic functionality
-        // require('@tailwindcss/typography'),
-        // require('tailwindcss-animate'), 
-        // require('tailwind-scrollbar'),
-        // require('@tailwindcss/container-queries'),
+        require('@tailwindcss/typography'),
+        require('tailwindcss-animate'), 
+        require('tailwind-scrollbar'),
+        require('@tailwindcss/container-queries'),
     ],
 }
 
