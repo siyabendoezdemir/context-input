@@ -1,5 +1,6 @@
 import { ContextInput } from "@/components/prompt-input/context-input";
 import { Greeting } from "@/components/greeting";
+import { ActionBar } from "@/components/quick-actions";
 
 export default function CoreChat() {
   return (
@@ -9,6 +10,7 @@ export default function CoreChat() {
         <div className="w-full max-w-[625px] space-y-6">
           <Greeting />
           <ContextInput />
+          <ActionBar />
         </div>
       </div>
       
@@ -17,8 +19,9 @@ export default function CoreChat() {
         <div className="p-4 space-y-4 flex justify-center">
           <Greeting />
         </div>
-        <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg">
+        <div className="fixed bottom-0 left-0 right-0 bg-white p-4 space-y-4 shadow-lg">
           <ContextInput />
+          <ActionBar />
         </div>
       </div>
     </div>
