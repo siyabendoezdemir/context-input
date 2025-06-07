@@ -5,7 +5,7 @@ import { Categories, ExamplesGrid } from "@/components/examples";
 
 export default function CoreChat() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
       {/* Desktop: centered layout */}
       <div className="hidden md:flex flex-1 flex-col justify-center items-center gap-4 p-4">
         <div className="w-full max-w-[625px] space-y-6">
@@ -41,6 +41,17 @@ export default function CoreChat() {
           </div>
         </div>
       </div>
+      
+      {/* Bottom gradient overlay */}
+      <div 
+        className="fixed bottom-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: '120px',
+          background: 'linear-gradient(0deg, #FCFCFC 0%, rgba(252, 252, 252, 0.00) 100%)',
+          backdropFilter: 'blur(1.5px)',
+          zIndex: 10
+        }}
+      />
     </div>
   );
 } 
