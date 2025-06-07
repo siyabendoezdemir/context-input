@@ -5,8 +5,16 @@
 
 @font-face {
   font-family: 'Suisse Int\'l';
-  src: url('/assets/fonts/suisse-intl-regular.ttf') format('truetype');
+  src: url('/fonts/suisse-int/SuisseIntl-Regular.otf') format('opentype');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Suisse Int\'l';
+  src: url('/fonts/suisse-int/SuisseIntl-Medium.otf') format('opentype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
